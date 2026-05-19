@@ -1,0 +1,242 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css">
+    <title>Company Dashboard</title>
+
+    
+  </head>
+
+  <body>
+    
+     <!-- nav -->
+    <nav>
+      <a onclick="goTo('home')">Home</a>
+      <a onclick="goTo('departments')">Departments</a>
+      <a onclick="goTo('add')">Add</a>
+    </nav>
+
+      <!-- home -->
+    <section id="home">
+      <h1>Dashboard</h1>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Employees</h3>
+          <p id="empCount">3</p>
+        </div>
+
+        <div class="card">
+          <h3>Departments</h3>
+          <p>3</p>
+        </div>
+
+        <div class="card">
+          <h3>Salary Avg</h3>
+          <p id="avgSalary">6000</p>
+        </div>
+      </div>
+
+      <table id="empTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Dept</th>
+            <th>Salary</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Ahmed</td>
+            <td>IT</td>
+            <td>5000</td>
+            <td>
+              <button onclick="deleteEmployee(this, 'IT')">Delete</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Sara</td>
+            <td>HR</td>
+            <td>6000</td>
+            <td>
+              <button onclick="deleteEmployee(this, 'HR')">Delete</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>Ali</td>
+            <td>Marketing</td>
+            <td>7000</td>
+            <td>
+              <button onclick="deleteEmployee(this, 'Marketing')">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!--  DEPARTMENTS  -->
+    <section id="departments">
+      <h1>Departments</h1>
+
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Employees Count</th>
+        </tr>
+
+        <tr>
+          <td>1</td>
+          <td>IT</td>
+          <td id="itCount">1</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>HR</td>
+          <td id="hrCount">1</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Marketing</td>
+          <td id="mktCount">1</td>
+        </tr>
+      </table>
+    </section>
+
+    
+    <section id="add">
+      <h1>Add Employee</h1>
+
+      <input id="id" placeholder="ID" />
+      <input id="name" placeholder="Name" />
+
+      <select id="dept">
+        <option value="">Select Department</option>
+        <option value="IT">IT</option>
+        <option value="HR">HR</option>
+        <option value="Marketing">Marketing</option>
+      </select>
+
+      <input id="salary" placeholder="Salary" />
+
+      <br /><br />
+
+      <button onclick="addEmployee()">Add</button>
+    </section>
+
+    <script>
+      /* NAV */
+      function goTo(id) {
+        document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+      }
+
+      /* UPDATE AVG */
+      function updateAvgSalary() {
+        let salaries = document.querySelectorAll(
+          "#empTable tbody tr td:nth-child(4)",
+        );
+
+        let total = 0;
+
+        salaries.forEach((td) => {
+          let salary = Number(td.innerText);
+          if (!isNaN(salary)) {
+            total += salary;
+          }
+        });
+
+        if (salaries.length > 0) {
+          let avg = total / salaries.length;
+          document.getElementById("avgSalary").innerText =
+            avg.toFixed(0); /* for ex 522.'2'*/
+        } else {
+          document.getElementById("avgSalary").innerText =
+            0; /* change card avgsal */
+        }
+      }
+
+      /* update on dept when del */
+      
+        function decreaseDept(dept) {
+          if (dept === "IT") itCount.innerText--;
+          if (dept === "HR") hrCount.innerText--;
+          if (dept === "Marketing") mktCount.innerText--;
+        }
+      
+      /* del row of emp */
+      function deleteEmployee(btn, dept) {
+        btn.closest("tr").remove();
+
+        /* update counts */
+        empCount.innerText = Number(empCount.innerText) - 1; /* emp count*/
+        decreaseDept(dept); 
+        updateAvgSalary();
+      }
+
+      /* ADD EMPLOYEE */
+      function addEmployee() {
+        let id = document.getElementById("id").value.trim();
+        let name = document.getElementById("name").value.trim();
+        let dept = document.getElementById("dept").value;
+        let salary = document.getElementById("salary").value.trim();
+
+        if (!id || !name || !dept || !salary || isNaN(Number(salary))) {   /* if sal not num */
+          alert("Please enter valid data");
+          return;
+        }
+
+        /* duplicate ID */
+        let ids = document.querySelectorAll(
+          "#empTable tbody tr td:first-child",
+        );
+
+        for (let i = 0; i < ids.length; i++) {
+          if (ids[i].innerText == id) {
+            alert("ID already exists");
+            return;
+          }
+        }
+
+        /* add row */
+        document.querySelector("#empTable tbody").innerHTML += `
+<tr>
+<td>${id}</td>
+<td>${name}</td>
+<td>${dept}</td>
+<td>${salary}</td>
+<td><button onclick="deleteEmployee(this, '${dept}')">Delete</button></td>
+</tr>
+`;
+
+        /* update */
+        empCount.innerText = Number(empCount.innerText) + 1;
+
+        if (dept === "IT") itCount.innerText = Number(itCount.innerText) + 1;
+        if (dept === "HR") hrCount.innerText = Number(hrCount.innerText) + 1;
+        if (dept === "Marketing")
+          mktCount.innerText = Number(mktCount.innerText) + 1;
+
+        updateAvgSalary();
+
+        /* clear */
+        document.getElementById("id").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("dept").value = "";
+        document.getElementById("salary").value = "";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial;
+      }
+
+      body {
+        background: #0b1320;
+        color: white;
+      }
+
+
+
+
+
+
+
+      
+      /* NAV */
+
+      nav {
+        position: sticky;
+        top: 0;
+        background: #111c2e;
+        padding: 18px;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        border-bottom: 1px solid #1f2a44;
+      }
+
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        color: #c084fc;
+      }
+
+
+
+
+
+      /* SECTIONS */
+
+      section {
+        padding: 80px 10%;
+      }
+
+
+
+
+
+
+      /* CARDS */
+
+      .cards {
+        display: flex;
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        flex: 1;
+        background: #111c2e;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid #1f2a44;
+      }
+
+
+
+
+
+
+      /* TABLE */
+
+      table {
+        width: 100%;
+        background: #111c2e;
+        margin-top: 20px;
+        color: white;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        border: 1px solid #1f2a44;
+        text-align: center;
+      }
+
+      th {
+        background: #16233a;
+      }
+
+
+
+
+
+      /* INPUT */
+
+      input,
+      select {
+        padding: 10px;
+        width: 250px;
+        border: none;
+        border-radius: 6px;
+      }
+
+
+
+
+
+      /* ADD */
+
+      #add {
+        background: #111c2e;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #1f2a44;
+      }
+
+
+
+
+
+      /* BUTTON */
+
+      button {
+        padding: 8px 12px;
+        background: #c084fc;
+        color: black;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 6px;
+      }
+
+      button:hover {
+        background: #a855f7;
+        color: white;
+      }
